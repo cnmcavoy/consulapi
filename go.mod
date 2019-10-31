@@ -1,4 +1,4 @@
-module gophers.dev/pkgs/consulapi
+module github.com/cnmcavoy/consulapi
 
 require (
 	github.com/gojuno/minimock/v3 v3.0.4
@@ -8,5 +8,3 @@ require (
 	gophers.dev/pkgs/ignore v0.2.0
 	gophers.dev/pkgs/loggy v0.2.0
 )
-
-go 1.12
