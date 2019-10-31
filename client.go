@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -60,10 +61,11 @@ type ClientOptions struct {
 // RequestError exposes the status code of a http request error
 type RequestError struct {
 	statusCode int
+	response string
 }
 
 func (h *RequestError) Error() string {
-	return fmt.Sprintf("status code (%d)", h.statusCode)
+	return fmt.Sprintf("status code (%d): %s", h.statusCode, h.response)
 }
 
 func (h *RequestError) StatusCode() int {
@@ -156,7 +158,7 @@ func (c *client) get(ctx Ctx, path string, i interface{}) error {
 	defer ignore.Drain(response.Body)
 
 	if response.StatusCode >= 400 {
-		return &RequestError{statusCode: response.StatusCode}
+		return newRequestError(response)
 	}
 
 	return json.NewDecoder(response.Body).Decode(i)
@@ -178,7 +180,7 @@ func (c *client) put(ctx Ctx, path, body string, i interface{}) error {
 	defer ignore.Drain(response.Body)
 
 	if response.StatusCode >= 400 {
-		return &RequestError{statusCode: response.StatusCode}
+		return newRequestError(response)
 	}
 
 	if i != nil {
@@ -203,10 +205,24 @@ func (c *client) delete(ctx Ctx, path string) error {
 	defer ignore.Drain(response.Body)
 
 	if response.StatusCode >= 400 {
-		return &RequestError{statusCode: response.StatusCode}
+		return newRequestError(response)
 	}
 
 	return nil
+}
+
+func newRequestError(resp *http.Response) *RequestError {
+	bytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return &RequestError{
+			statusCode: resp.StatusCode,
+			response:   err.Error(),
+		}
+	}
+	return &RequestError{
+		statusCode: resp.StatusCode,
+		response:   string(bytes),
+	}
 }
 
 func (c *client) maybeSetToken(request *http.Request) {
