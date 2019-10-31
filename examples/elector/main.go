@@ -7,9 +7,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/cnmcavoy/consulapi"
+
 	"github.com/pkg/errors"
 
-	"gophers.dev/pkgs/consulapi"
 	"gophers.dev/pkgs/loggy"
 )
 

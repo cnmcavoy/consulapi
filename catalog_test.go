@@ -35,7 +35,7 @@ func Test_Client_v1_catalog_datacenters_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.DataCenters(ctx)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func node(name, address, wan string) Node {
@@ -86,7 +86,7 @@ func Test_Client_v1_catalog_nodes_defaults_err(t *testing.T) {
 	_, err := client.Nodes(ctx, NodesQuery{
 		// empty
 	})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_catalog_nodes_dc(t *testing.T) {
@@ -241,7 +241,7 @@ func Test_Client_v1_catalog_node_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Node(ctx, "foobar", NodeQuery{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_catalog_node_dc(t *testing.T) {
@@ -317,7 +317,7 @@ func Test_Client_v1_catalog_services_err(t *testing.T) {
 	_, err := client.Services(ctx, ServicesQuery{
 		// empty
 	})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_catalog_services_dc(t *testing.T) {
@@ -398,7 +398,7 @@ func Test_Client_v1_catalog_service_err(t *testing.T) {
 	_, err := client.Service(ctx, "myapp", ServiceQuery{
 		// empty
 	})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_catalog_service_mix(t *testing.T) {
@@ -465,7 +465,7 @@ func Test_Client_v1_catalog_connect_err(t *testing.T) {
 	_, err := client.Connect(ctx, "myapp", ServiceQuery{
 		// empty
 	})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_catalog_connect_mix(t *testing.T) {

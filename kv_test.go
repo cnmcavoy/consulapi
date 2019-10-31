@@ -71,7 +71,7 @@ func Test_KV_Get_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Get(ctx, "config/baz/bar", Query{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_KV_Get_non_existent(t *testing.T) {
@@ -86,7 +86,7 @@ func Test_KV_Get_non_existent(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Get(ctx, "config/baz/bar", Query{})
-	require.EqualError(t, err, `key "/v1/kv/config/baz/bar" does not exist`)
+	require.Contains(t, err.Error(), `key "/v1/kv/config/baz/bar" does not exist`)
 }
 
 func Test_KV_Put(t *testing.T) {
@@ -136,7 +136,7 @@ func Test_KV_Put_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Put(ctx, "config/baz/bar", "someValue", Query{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_KV_Delete(t *testing.T) {
@@ -183,7 +183,7 @@ func Test_KV_Delete_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Delete(ctx, "config/baz/bar", Query{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_KV_Keys(t *testing.T) {
@@ -240,7 +240,7 @@ func Test_KV_Keys_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Keys(ctx, "config/baz", Query{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_KV_Recurse(t *testing.T) {
@@ -314,7 +314,7 @@ func Test_KV_Recurse_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Recurse(ctx, "config/baz", Query{})
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_KV_Recurse_non_existent(t *testing.T) {
@@ -331,5 +331,5 @@ func Test_KV_Recurse_non_existent(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Recurse(ctx, "config/not-here", Query{})
-	require.EqualError(t, err, `key-space "config/not-here" does not exist`)
+	require.Contains(t, err.Error(), `key-space "config/not-here" does not exist`)
 }

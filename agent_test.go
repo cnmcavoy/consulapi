@@ -44,7 +44,7 @@ func Test_Client_v1_agent_self_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Self(ctx)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_members(t *testing.T) {
@@ -75,7 +75,7 @@ func Test_Client_v1_agent_members_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Members(ctx, false)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_members_wan(t *testing.T) {
@@ -108,7 +108,7 @@ func Test_Client_v1_agent_members_wan_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Members(ctx, true)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_reload(t *testing.T) {
@@ -136,7 +136,7 @@ func Test_Client_v1_agent_reload_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Reload(ctx)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_maintenance_enable(t *testing.T) {
@@ -172,7 +172,7 @@ func Test_Client_v1_agent_maintenance_enable_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.MaintenanceMode(ctx, true, "my reason")
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_maintenance_disable(t *testing.T) {
@@ -208,7 +208,7 @@ func Test_Client_v1_agent_maintenance_disable_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.MaintenanceMode(ctx, false, "my reason")
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_metrics(t *testing.T) {
@@ -238,7 +238,7 @@ func Test_Client_v1_agent_metrics_err(t *testing.T) {
 	defer ts.Close()
 
 	_, err := client.Metrics(ctx)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_join(t *testing.T) {
@@ -268,7 +268,7 @@ func Test_Client_v1_agent_join_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Join(ctx, "10.0.0.1", false)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_join_wan(t *testing.T) {
@@ -298,7 +298,7 @@ func Test_Client_v1_agent_join_wan_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Join(ctx, "10.0.0.1", true)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_leave(t *testing.T) {
@@ -326,7 +326,7 @@ func Test_Client_v1_agent_leave_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.Leave(ctx)
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_forceLeave(t *testing.T) {
@@ -354,7 +354,7 @@ func Test_Client_v1_agent_forceLeave_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.ForceLeave(ctx, "badNode1")
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }
 
 func Test_Client_v1_agent_token_unknown_kind(t *testing.T) {
@@ -362,7 +362,7 @@ func Test_Client_v1_agent_token_unknown_kind(t *testing.T) {
 	defer ts.Close()
 
 	err := client.SetACLToken(ctx, "badKind", "abc123")
-	require.EqualError(t, err, `unrecognized kind of token "badKind"`)
+	require.Contains(t, err.Error(), `unrecognized kind of token "badKind"`)
 }
 
 func Test_Client_v1_agent_token_default(t *testing.T) {
@@ -392,5 +392,5 @@ func Test_Client_v1_agent_token_default_err(t *testing.T) {
 	defer ts.Close()
 
 	err := client.SetACLToken(ctx, "default", "abc123")
-	require.EqualError(t, err, "status code (500)")
+	require.Contains(t, err.Error(), "status code (500)")
 }

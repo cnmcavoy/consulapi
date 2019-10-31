@@ -102,7 +102,7 @@ func Test_Client_get_bad_reply(t *testing.T) {
 
 	var value myFoo
 	err := c.(*client).get(ctx, "/test/arbitrary", &value)
-	require.EqualError(t, err, "EOF")
+	require.Contains(t, err.Error(), "EOF")
 }
 
 func Test_Client_get_bad_response(t *testing.T) {
@@ -118,7 +118,7 @@ func Test_Client_get_bad_response(t *testing.T) {
 
 	var value myFoo
 	err := c.(*client).get(ctx, "/test/arbitrary", &value)
-	require.EqualError(t, err, "status code (418)")
+	require.Contains(t, err.Error(), "status code (418)")
 }
 
 const (
@@ -171,7 +171,7 @@ func Test_Client_put_bad_response(t *testing.T) {
 
 	var value myFoo
 	err := c.(*client).put(ctx, "/test/arbitrary", egBody, &value)
-	require.EqualError(t, err, "status code (418)")
+	require.Contains(t, err.Error(), "status code (418)")
 }
 
 func Test_Client_delete(t *testing.T) {
@@ -214,5 +214,5 @@ func Test_Client_delete_bad_response(t *testing.T) {
 	defer ts.Close()
 
 	err := c.(*client).delete(ctx, "/test/arbitrary")
-	require.EqualError(t, err, "status code (418)")
+	require.Contains(t, err.Error(), "status code (418)")
 }

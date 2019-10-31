@@ -85,7 +85,7 @@ func Test_Session_CreateSession_err(t *testing.T) {
 		TTL:       10 * time.Second,
 		Behavior:  SessionRelease,
 	})
-	require.EqualError(t, err, "failed to create session: status code (500)")
+	require.Contains(t, err.Error(), "failed to create session: status code (500)")
 }
 
 func Test_Session_DeleteSession(t *testing.T) {
@@ -138,7 +138,7 @@ func Test_Session_DeleteSession_err(t *testing.T) {
 	err := client.DeleteSession(ctx, SessionQuery{
 		ID: "abc123",
 	})
-	require.EqualError(t, err, "failed to destroy session: status code (500)")
+	require.Contains(t, err.Error(), "failed to destroy session: status code (500)")
 }
 
 func Test_Session_ReadSession(t *testing.T) {
@@ -194,7 +194,7 @@ func Test_Session_ReadSession_err(t *testing.T) {
 	_, err := client.ReadSession(ctx, SessionQuery{
 		ID: "abc123",
 	})
-	require.EqualError(t, err, "failed to read session: status code (500)")
+	require.Contains(t, err.Error(), "failed to read session: status code (500)")
 }
 
 func Test_Session_RenewSession(t *testing.T) {
@@ -249,7 +249,7 @@ func Test_Session_RenewSession_err(t *testing.T) {
 	_, err := client.RenewSession(ctx, SessionQuery{
 		ID: "abc123",
 	})
-	require.EqualError(t, err, "failed to renew session: status code (500)")
+	require.Contains(t, err.Error(), "failed to renew session: status code (500)")
 }
 
 func Test_Session_ListSession(t *testing.T) {
