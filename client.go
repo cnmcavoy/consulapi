@@ -1,4 +1,4 @@
-package consulapi // import "gophers.dev/pkgs/consulapi"
+package consulapi
 
 import (
 	"encoding/json"

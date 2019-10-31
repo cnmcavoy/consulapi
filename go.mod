@@ -8,3 +8,5 @@ require (
 	gophers.dev/pkgs/ignore v0.2.0
 	gophers.dev/pkgs/loggy v0.2.0
 )
+
+go 1.13
